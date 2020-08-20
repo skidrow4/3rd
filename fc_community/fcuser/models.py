@@ -7,7 +7,7 @@ class Fcuser(models.Model):
     username = models.CharField(max_length=32,
                                 verbose_name='사용자명')
     useremail = models.EmailField(max_length=128,
-                                  verbose_name='사용자이메일')
+                                  verbose_name='사용자이메일')   #  EmailField 메일 검증을 한다 @ 있나 없나.
     password = models.CharField(max_length=64,
                                 verbose_name='비밀번호')
     registered_dttm = models.DateTimeField(auto_now_add=True,
