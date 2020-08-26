@@ -1,44 +1,31 @@
-<html>
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
-        <link rel="stylesheet" href="/static/bootstrap.min.css" />
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row mt-5">
-                <div class="col-12 text-center">
-                    <h1>로그인</h1>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-12">
-                    {{ error }}
-                    <!-- 여기 form html 들어 간다 -->
-                    <form method="POST" action=".">  <!-- action는 생략하면 자기 자신으로온다.  '.' 도 똑같이 자기자신 표현  -->
-                        {% csrf_token %}   <!-- 폼의 경우 데이타를 서버로 전달해주는건데,  암호화된 키를 숨겨놓는다-->
-                                           <!--  크로스도메인을 못하게. == 중간에 다른 서버로 전달 시키는것을 못 하게 -->
-                                           <!--  폼에서는 input의 name속성값이 있어야 한다. 서버로 들어 갔을때 키값이 된다-->
-                        <div class="form-group">
-                            <label for="username">사용자 이름</label>
-                            <input type="text" class="form-control" id="username" placeholder="사용자 이름" name="username" />
-                        </div>
+{% extends "base.html" %}
 
-                        <div class="form-group">
-                            <label for="password">비밀번호</label>
-                            <input type="password" class="form-control" id="password" placeholder="비밀번호" name="password" />
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">로그인</button>
-                    </form>
-                </div>
+{% block contents %}
+<div class="row mt-5">
+    <div class="col-12 text-center">
+        <h1>로그인</h1>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-12">
+        {{ error }}
+        <!-- 여기 form html 들어 간다 -->
+        <form method="POST" action=".">  <!-- action는 생략하면 자기 자신으로온다.  '.' 도 똑같이 자기자신 표현  -->
+            {% csrf_token %}   <!-- 폼의 경우 데이타를 서버로 전달해주는건데,  암호화된 키를 숨겨놓는다-->
+                                <!--  크로스도메인을 못하게. == 중간에 다른 서버로 전달 시키는것을 못 하게 -->
+                                <!--  폼에서는 input의 name속성값이 있어야 한다. 서버로 들어 갔을때 키값이 된다-->
+            <div class="form-group">
+                <label for="username">사용자 이름</label>
+                <input type="text" class="form-control" id="username" placeholder="사용자 이름" name="username" />
             </div>
-        </div>
-        
-    </body>
-</html>
+
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" id="password" placeholder="비밀번호" name="password" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">로그인</button>
+        </form>
+    </div>
+</div>
+{% endblock %}       
