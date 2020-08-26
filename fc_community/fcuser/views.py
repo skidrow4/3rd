@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Fcuser
+from .forms import LoginForm
 
 # Create your views here.
 
@@ -23,8 +24,9 @@ def logout(request):
 
     return redirect('/')
 
-
+'''
 def login(request):
+    
     print(dir(request))
     print(dir(request.session))
     if request.method == 'GET':
@@ -55,6 +57,18 @@ def login(request):
                 print('---------2222',password, fcuser.password)
                 res_data['error'] = '비밀번호가 틀렸읍니다.'
         return render(request, 'login.html', res_data)
+'''
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():  # 유효성 검사, 유효 하지 않는다면 error의 값이 생긴다.form안에...
+            # session 처리
+            request.session['user'] = form.user_id
+            return redirect('/')
+    else:
+        form = LoginForm()
+
+    return render(request, 'login.html', {'form': form})
     
 def register(request):
     if request.method == 'GET':                    # url로 들어 올때
