@@ -1,12 +1,27 @@
 from django import forms
-from .models import Fcuser
-from django.contrib.auth.hashers import check_password
 
+
+class BoardForm(forms.Form):
+    title = forms.CharField(
+        error_messages={
+            'required': '제목을 입력해주세요.'
+        },
+        max_length=128, label="제목")  #  모델의 길이와 맞춘다..
+    contents = forms.CharField(
+        error_messages={
+            'required': '내용을 입력해주세요.'
+        },
+        widget=forms.Textarea, label="내용")
+    #tags = forms.CharField(
+    #    required=False, label="태그")
+# 검증은 필요 없다. 기본적으로 들어 가있는게 값이 있는지 없는지 확인해 주었다 ??????
+
+# 아래는 참고적으로 붙여 놓은것, 현재 프로그램이랑 상관 없음.....
 class LoginForm(forms.Form):
-    username = forms.CharField(
+    title = forms.CharField(
         error_messages={
             'required': '아이디를 입력해주세요.'
-        },  #  required의 값을 바꾼다......기존 브라우저 화면에 뿌려주는 This Field is required라고 보면 된다.
+        },  #  required의 값을 바꾼다......기존 This Field is required라고 보면 된다.
         max_length=32, label="사용자 이름")
     password = forms.CharField(
         error_messages={
@@ -22,15 +37,10 @@ class LoginForm(forms.Form):
         # 만약 값(데이타)가 없다면 여기서 실패처리가 되어서 나간다.
         username = cleaned_data.get('username')
         password = cleaned_data.get('password')
- 
+
         if username and password:  # 값이 있을때 
             # 현재여기서 세션 처리 하지 않는다. 즉 검증만 하면 된다.
-            # fcuser = Fcuser.objects.get(username=username)
-            try:  # 예외 처리 db에 유저 이름이 없을때...
-                fcuser = Fcuser.objects.get(username=username)
-            except Fcuser.DoesNotExist:
-                self.add_error('username', '아이디가 없습니다')
-                return  #  아래쪽 실행을 방지 하기 위하여 값없는 리턴을 한다....
+            fcuser = Fcuser.objects.get(username=username)
             
             if not check_password(password, fcuser.password):  # 값이 틀릴때
                 # 앞 post입력받은값, 뒤는 모델의 값

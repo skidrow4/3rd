@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<div class="row mt-5">
+    <div class="col-12">
+      <table class="table table-light">
+        <thead class="thead-light">
+          <tr>
+            <th>#</th>
+            <th>제목</th>
+            <th>아이디</th>
+            <th>일시</th>
+          </tr>
+        </thead>
+        <!-- {{ boards }} -->
+        <tbody class="text-dark">
+          <!-- <tr>
+            <th>1</th>
+            <td>제목 테스트입니다.</td>
+            <td>fcuser</td>
+            <td>2020-08-26 16:33:00</td>
+          </tr> -->
+          {% for board in boards %}
+          <tr onclick="location.href='/board/detail/{{ board.id }}/'">
+                <th>{{ board.id }}</th>
+                <td><a href="/board/detail/{{ board.id }}">{{ board.title }}</a></td>
+                <td>{{ board.writer }}</td>
+                <td>{{ board.registered_dttm }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-12">
+      <nav>
+        <ul class="pagination justify-content-center">
+          {% if boards.has_previous %}   <!-- 예외처리  처음 1페이지 일때 이전으로가 없다... else에서 이전버턴 링크를 멍텅구리 만든다..  -->
+          <li class="page-item">
+            <a class="page-link" href="?p={{ boards.previous_page_number }}">이전으로</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#">이전으로</a>
+          </li>
+          {% endif %}
+          <li class="page-item active">
+            <a class="page-link" href="#">{{ boards.number }} / {{ boards.paginator.num_pages }}</a>
+          </li>
+          {% if boards.has_next %}  <!--  예외처리  처음 마지막페이지 일때 다음으로가 없다... else에서 다음버턴 링크를 멍텅구리 만든다.. --> 
+          <li class="page-item">
+            <a class="page-link" href="?p={{ boards.next_page_number }}">다음으로</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link disabled" href="#">다음으로</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <button class="btn btn-primary" onclick="location.href='/board/write/'">글쓰기</button>
+    </div>
+  </div>
+{% endblock %}

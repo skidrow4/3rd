@@ -10,13 +10,14 @@ from .forms import LoginForm
 #    return render(request, 'register.html')    #  하위 폴더 가 있다면  forder1/forder2/register.html  
 
 def home(request):
-    user_id = request.session.get('user')
+    '''user_id = request.session.get('user')
     if user_id:
         fcuser = Fcuser.objects.get(pk=user_id)
         return HttpResponse(fcuser.username)
 
     return HttpResponse('Home! views.py에서 글자로 테스트')
-    # return render(request, 'home.html')
+    # return render(request, 'home.html')'''
+    return render(request, 'home.html')
 
 def logout(request):
     if request.session.get('user'):  # 로그인 했을때 

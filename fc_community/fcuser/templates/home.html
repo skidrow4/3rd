@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<div class="row mt-5">
+  <div class="col-12 text-center">
+    <h1>홈페이지!</h1>
+  </div>
+</div>
+<div class="row mt-5">
+  {% if request.session.user %}  <!--  유저 정보가 있으면 /  로그인 되여 있을때 로그아웃만 보인고-->
+  <div class="col-12">
+    <button class="btn btn-primary btn-block" onclick="location.href='/fcuser/logout/'">로그아웃</button>
+    <!--  btn-block 버턴의 모양이 틀린다....확인 해 보기  -->
+  </div>
+  {% else %}  <!--  유저 정보가 없으면 /  로그인 아직일때는 로그인 버턴이 보여 준다..-->
+  <div class="col-6">
+    <button class="btn btn-primary btn-block" onclick="location.href='/fcuser/login/'">로그인</button>
+  </div>
+  <div class="col-6">
+    <button class="btn btn-primary btn-block" onclick="location.href='/fcuser/register/'">회원가입</button>
+  </div>
+  {% endif %}
+</div>
+<div class="row mt-1">
+  <div class="col-12">
+    <button class="btn btn-primary btn-block" onclick="location.href='/board/list/'">게시물보기</button>
+  </div>
+</div>
+{% endblock %}
